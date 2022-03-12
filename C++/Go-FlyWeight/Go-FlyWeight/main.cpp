@@ -27,7 +27,7 @@ protected:
 public:
     Piece(PieceColor color, PiecePos pos): m_color(color), m_pos(pos) {}
     virtual void Draw() {}
-    string description() const {//log
+    string description() const {//描述棋子的颜色和位置
         const char *color = (m_color==BLACK)?"black":"white";
         int x = m_pos.getX();
         int y = m_pos.getY();
@@ -68,15 +68,14 @@ public:
         m_vecPiece.push_back(piece);
     }
     vector<Piece*> getAllPieces() {
-        cout << "棋盘上所有的棋子:" << endl;
+        cout << "棋盘上所有的棋子(" << m_vecPiece.size() << "):" << endl;
         for(int i = 0; i < m_vecPiece.size(); i++) {
             Piece* p = m_vecPiece[i];
-            cout << p->description() << endl;
+            cout << "[" << i << "] " << p->description() << endl;
         }
         return m_vecPiece;
     }
 };
-
 
 int main(int argc, const char * argv[]) {
     PieceBoard board = PieceBoard("blackPlayer", "whitePlayer");
