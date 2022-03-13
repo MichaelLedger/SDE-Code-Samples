@@ -69,9 +69,17 @@ public:
     }
     vector<Piece*> getAllPieces() {
         cout << "棋盘上所有的棋子(" << m_vecPiece.size() << "):" << endl;
-        for(int i = 0; i < m_vecPiece.size(); i++) {
+        /*
+         for(语句1;语句2;语句3) {}
+         语句 1 在循环（代码块）开始前执行
+         语句 2 定义运行循环（代码块）的条件
+         语句 3 在循环（代码块）已被执行之后执行
+         这就是循环中的 ++i 和 i++ 结果一样的原因，但是性能不一样，在大量数据的时候 ++i 的性能要比 i++ 的性能好原因:
+         i++ 由于是在使用当前值之后 再+1 ，所以需要一个临时的变量来转存。 而 ++i 则是在直接 +1 ，省去了对内存的操作的环节，相对而言能够提高性能。
+         */
+        for(int i = 0;i < m_vecPiece.size();++i) {
             Piece* p = m_vecPiece[i];
-            cout << "[" << i << "] " << p->description() << endl;
+            cout << "[" << i << "] " << p->description() << endl;//指针获取对象的成员函数可以使用 -> 操作符
         }
         return m_vecPiece;
     }
