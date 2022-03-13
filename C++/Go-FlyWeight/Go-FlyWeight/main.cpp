@@ -4,6 +4,7 @@
 //
 //  Created by MTX on 2022/3/12.
 //
+//  向量（Vector）是一个封装了动态大小数组的顺序容器（Sequence Container）可以认为是一个动态数组的抽象，其中一个vector中的所有对象都必须是同一种类型
 
 #include <iostream>
 #include <vector>
@@ -17,8 +18,8 @@ private:
     int y;
 public:
     PiecePos(int a, int b): x(a), y(b) {}
-    int getX() const { return x; }
-    int getY() const { return y; }
+    int getX() { return x; }
+    int getY() { return y; }
 };
 class Piece {//棋子定义
 protected:
@@ -27,11 +28,11 @@ protected:
 public:
     Piece(PieceColor color, PiecePos pos): m_color(color), m_pos(pos) {}
     virtual void Draw() {}
-    string description() const {//描述棋子的颜色和位置
+    string description() {//描述棋子的颜色和位置
         const char *color = (m_color==BLACK)?"black":"white";
         int x = m_pos.getX();
         int y = m_pos.getY();
-        char *buf = new char[0];
+        char *buf = new char[100];//避免数组越界 malloc: Incorrect checksum for freed object
         sprintf(buf, "color:%s, position:(%d,%d)", color, x, y);
         return buf;
     }
@@ -80,6 +81,11 @@ public:
         for(int i = 0;i < m_vecPiece.size();++i) {
             Piece* p = m_vecPiece[i];
             cout << "[" << i << "] " << p->description() << endl;//指针获取对象的成员函数可以使用 -> 操作符
+        }
+        cout << "========" << endl;
+        for(vector<Piece*>::iterator item=m_vecPiece.begin();item<m_vecPiece.end();++item){//迭代器遍历
+            Piece* p = *item;
+            cout << p->description() << endl;//指针获取对象的成员函数可以使用 -> 操作符
         }
         return m_vecPiece;
     }
