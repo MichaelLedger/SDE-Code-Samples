@@ -1,3 +1,2 @@
 rootProject.name='Go-FlyWeight'
-include ':app'
 include ':go'
