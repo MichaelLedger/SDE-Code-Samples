@@ -1,0 +1,2 @@
+rootProject.name='MenuComponent'
+include ':MenuLib'

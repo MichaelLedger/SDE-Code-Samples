@@ -88,7 +88,7 @@ class MenuComponent {//构成层叠菜单的元素
 protected: //Qustion 1
     string name;
 public:
-    void printMenu() { cout << name; }
+    void printMenu() { cout << name << endl; }
     virtual void addMenuElement(MenuComponent *element) = 0;//Qustion 2
     virtual void removeMenuElement(MenuComponent *element) = 0;
     virtual list<MenuComponent *> * getElement() = 0;//Qustion 3
@@ -114,14 +114,24 @@ public:
     list<MenuComponent *> * getElement() { return &elementList; }
 };
 
+// 递归打印Menu
+void printMenus(MenuComponent& ifile) {
+    ifile.printMenu();
+    list<MenuComponent *> *children = ifile.getElement();
+    if (children == NULL) return;
+    if (children->size()==0) return;
+    
+    list<MenuComponent *>::iterator iter;
+    for (iter = children->begin(); iter != children->end(); iter++)
+    {
+        MenuComponent *comp = *iter;
+        printMenus(*comp);
+    }
+}
+
 void printString(string& stringToPrint)
 {
     cout << stringToPrint << endl;
-}
-
-void printMenu(MenuComponent& menuToPrint)
-{
-    menuToPrint.printMenu();
 }
 
 int main(int argc, const char * argv[]) {
@@ -130,7 +140,12 @@ int main(int argc, const char * argv[]) {
     MenuComponent *element = new MenuItem("On This Sheet");
     mainMenu->addMenuElement(subMenu);//Qustion 5
     subMenu->addMenuElement(element);
+    
+    printMenus(*mainMenu);
+    
+    cout << endl;
 
+    /*
     //使用for循环来遍历一个list
     cout << "traversal method 1\n";
     list<MenuComponent *> * elementList = mainMenu->getElement();
@@ -149,5 +164,7 @@ int main(int argc, const char * argv[]) {
     //使用STL的通用算法for_each来遍历list,自定义类不支持此遍历方式，建议转string或int等基础类型
     cout << "traversal method 2\n";
     for_each(nameList.begin(), nameList.end(), printString);
+     */
+    
     return 0;
 }
